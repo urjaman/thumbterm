@@ -2,6 +2,8 @@ Makefile
 *.pro.user*
 *.o
 moc_*
-./fingerterm
+fingerterm
 qrc_resources.cpp
 version.h
+*.list
+RPMS/
