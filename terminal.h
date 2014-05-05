@@ -55,8 +55,11 @@ class Terminal : public QObject
 {
     Q_OBJECT
 public:
-    static const int defaultFgColor = 7;
-    static const int defaultBgColor = 0;
+    // These are indexes in the TextRender.iColorTable array.
+    // See http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+    // for a map of index -> color.
+    static const int defaultFgColor = 10; // Bright green
+    static const int defaultBgColor = 0; // Black
 
     explicit Terminal(QObject *parent = 0);
     virtual ~Terminal() {}

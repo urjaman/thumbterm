@@ -89,6 +89,7 @@ private:
     Terminal *iTerm;
     Util *iUtil;
 
+    // Holds the standard 256 xterm colors as listed here: http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
     QList<QColor> iColorTable;
 };
 
