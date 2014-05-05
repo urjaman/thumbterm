@@ -36,6 +36,9 @@ ApplicationWindow {
 
     initialPage:Page {
         id: page
+
+        allowedOrientations: Orientation.All
+
         anchors.fill: parent
 
         Rectangle {
