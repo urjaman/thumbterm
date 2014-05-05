@@ -21,8 +21,9 @@ import QtQuick 2.0
 import TextRender 1.0
 import QtQuick.Window 2.0
 import com.nokia.meego 2.0
+import Sailfish.Silica 1.0
 
-PageStackWindow {
+ApplicationWindow {
     id: pageStackWindow
 
     focus: true
@@ -37,11 +38,9 @@ PageStackWindow {
         id: page
         anchors.fill: parent
 
-        orientationLock: window.getOrientationLockMode()
-
         Rectangle {
         property string fgcolor: "black"
-        property string bgcolor: "#000000"
+        property string bgcolor: "#00000000" // Transparent
         property int fontSize: 14
 
         property int fadeOutTime: 80
