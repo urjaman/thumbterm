@@ -32,14 +32,14 @@ Rectangle {
     property variant currentKeyPressed: 0
 
     property string keyFgColor: "#ffffff"
-    property string keyBgColor: "#202020"
+    property string keyBgColor: keyboard.active ? "#88202020" : "#00202020"
     property string keyHilightBgColor: "#ffffff"
-    property string keyBorderColor: "#303030"
+    property string keyBorderColor:  "#00000000"
 
     property bool active: false
 
     property int outmargins: util.settingsValue("ui/keyboardMargins")
-    property int keyspacing: 6
+    property int keyspacing: 0
     property int keysPerRow: keyLoader.vkbColumns()
     property real keywidth: (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
 

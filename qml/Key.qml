@@ -30,7 +30,7 @@ Rectangle {
     property bool sticky: false     // can key be stickied?
     property bool becomesSticky: false // will this become sticky after release?
     property int stickiness: 0      // current stickiness status
-    property real labelOpacity: keyboard.active ? 1.0 : 0.3
+    property real labelOpacity: keyboard.active ? 1.0 : 0.2
 
     // mouse input handling
     property int clickThreshold: 20
@@ -42,8 +42,8 @@ Rectangle {
     height: window.height/8 < 55 ? window.height/8 : 55
     color: label=="" ? "transparent" : keyboard.keyBgColor
     border.color: label=="" ? "transparent" : keyboard.keyBorderColor
-    border.width: 1
-    radius: 5
+    border.width: 0
+    radius: 0
 
     property bool shiftActive: (keyboard.keyModifiers & Qt.ShiftModifier) && !sticky
 
@@ -68,7 +68,7 @@ Rectangle {
             text: key.label_alt
             color: keyboard.keyFgColor
 
-            opacity: key.labelOpacity * (highlighted ? 1.0 : 0.2)
+            opacity: key.labelOpacity * (highlighted ? 1.0 : 0.5)
             Behavior on opacity { NumberAnimation { duration: 100 } }
 
             font.pointSize: (highlighted ? 24 : 14) * (text.length > 1 ? 0.5 : 1.0)
