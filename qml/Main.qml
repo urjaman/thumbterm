@@ -24,7 +24,7 @@ import com.nokia.meego 2.0
 import Sailfish.Silica 1.0
 
 ApplicationWindow {
-    id: pageStackWindow
+    id: appWindow
 
     focus: true
 
@@ -32,7 +32,10 @@ ApplicationWindow {
         window.vkbKeypress(event.key,event.modifiers);
     }
 
-    property string windowTitle: util.currentWindowTitle();
+    property string windowTitle: util.currentWindowTitle()
+    property variant lines: []
+
+    cover: Qt.resolvedUrl("Cover.qml")
 
     initialPage:Page {
         id: page
@@ -66,8 +69,8 @@ ApplicationWindow {
                         util.configPath() + "/<br><br>\n" +
                         "Documentation:<br>\n<a href=\"https://github.com/OlliV/thumbterm/wiki\">https://github.com/OlliV/thumbterm/wiki</a>"
                 if (termH != 0 && termW != 0) {
-                    str += "<br><br>Current window title: <font color=\"gray\">" + windowTitle.substring(0,40) + "</font>"; //cut long window title
-                    if(windowTitle.length>40)
+                    str += "<br><br>Current window title: <font color=\"gray\">" + appWindow.windowTitle.substring(0,40) + "</font>"; //cut long window title
+                    if(appWindow.windowTitle.length>40)
                         str += "...";
                     str += "<br>Current terminal size: <font color=\"gray\">" + termW + "x" + termH + "</font>";
                     str += "<br>Charset: <font color=\"gray\">" + util.settingsValue("terminal/charset") + "</font>";
@@ -291,7 +294,7 @@ ApplicationWindow {
                 textNotify.opacity = 0;
             }
             onWindowTitleChanged: {
-                windowTitle = util.currentWindowTitle();
+                appWindow.windowTitle = util.currentWindowTitle()
             }
         }
 
@@ -425,6 +428,7 @@ ApplicationWindow {
         function displayBufferChanged()
         {
             lineView.lines = term.printableLinesFromCursor(util.settingsValue("ui/showExtraLinesFromCursor"));
+            appWindow.lines = term.printableLinesFromCursor(30);
             lineView.cursorX = textrender.cursorPixelPos().x;
             lineView.cursorWidth = textrender.cursorPixelSize().width;
             lineView.cursorHeight = textrender.cursorPixelSize().height;
