@@ -3,6 +3,12 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+
+    Rectangle {
+        anchors.fill: parent
+        color: "#000000"
+    }
+
     Label {
         id: title
 
@@ -17,7 +23,7 @@ CoverBackground {
             pixelSize: theme.fontSizeSmall
         }
 
-        color: Theme.highlightColor
+        color: "#CCCCCC"
         text: appWindow.windowTitle
 
     }
@@ -35,7 +41,7 @@ CoverBackground {
             pixelSize: Theme.fontSizeTiny / 2
         }
 
-        color: Theme.secondaryColor
+        color: "#00FF00"
 
         text: {
             var res = ''
