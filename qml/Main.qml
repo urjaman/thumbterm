@@ -40,8 +40,6 @@ ApplicationWindow {
 
         allowedOrientations: Orientation.All
 
-        anchors.fill: parent
-
         Rectangle {
         property string fgcolor: "black"
         property string bgcolor: "#00000000" // Transparent
