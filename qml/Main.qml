@@ -19,8 +19,6 @@
 
 import QtQuick 2.0
 import TextRender 1.0
-import QtQuick.Window 2.0
-import com.nokia.meego 2.0
 import Sailfish.Silica 1.0
 
 ApplicationWindow {
@@ -328,7 +326,7 @@ ApplicationWindow {
             property string label: ""
             Text {
                 color: "#000000"
-                font.pointSize: 34
+                font.pointSize: 64
                 anchors.centerIn: parent
                 text: visualKeyFeedbackRect.label
             }

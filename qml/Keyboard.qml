@@ -38,7 +38,7 @@ Rectangle {
 
     property bool active: false
 
-    property int outmargins: util.settingsValue("ui/keyboardMargins")
+    property int outmargins: 7 //util.settingsValue("ui/keyboardMargins")
     property int keyspacing: 0
     property int keysPerRow: keyLoader.vkbColumns()
     property real keywidth: (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
@@ -84,11 +84,11 @@ Rectangle {
     onCurrentKeyPressedChanged: {
         if(currentKeyPressed != 0 && currentKeyPressed.currentLabel.length === 1 && currentKeyPressed.currentLabel !== " ") {
             visualKeyFeedbackRect.label = currentKeyPressed.currentLabel
-            visualKeyFeedbackRect.width = currentKeyPressed.width*1.5
-            visualKeyFeedbackRect.height = currentKeyPressed.height*1.5
+            visualKeyFeedbackRect.width = currentKeyPressed.width*2
+            visualKeyFeedbackRect.height = currentKeyPressed.height*2.5
             var mappedCoord = window.mapFromItem(currentKeyPressed, 0, 0);
             visualKeyFeedbackRect.x = mappedCoord.x - (visualKeyFeedbackRect.width-currentKeyPressed.width)/2
-            visualKeyFeedbackRect.y = mappedCoord.y - currentKeyPressed.height*1.5
+            visualKeyFeedbackRect.y = mappedCoord.y - currentKeyPressed.height*2.5
             visualKeyFeedbackRect.visible = true;
         } else {
             visualKeyFeedbackRect.visible = false;
