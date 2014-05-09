@@ -43,6 +43,12 @@ CoverBackground {
 
         color: "#00FF00"
 
+        // Align bottom and clip to ensure that the cover displays
+        // the last lines in the display buffer on the cover (i.e. the
+        // latest commands).
+        clip: true;
+        verticalAlignment : Text.AlignBottom
+
         text: {
             var res = ''
             for (var i=0; i<appWindow.lines.length; i++) {
