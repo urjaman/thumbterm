@@ -32,7 +32,7 @@ Rectangle {
     property variant currentKeyPressed: 0
 
     property string keyFgColor: "#ffffff"
-    property string keyBgColor: keyboard.active ? "#88202020" : "#00202020"
+    property string keyBgColor: keyboard.active ? "#8800FF00" : "#00000000"
     property string keyHilightBgColor: "#ffffff"
     property string keyBorderColor:  "#00000000"
 
