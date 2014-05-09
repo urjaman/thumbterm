@@ -31,6 +31,7 @@ SOURCES += main.cpp terminal.cpp textrender.cpp \
 
 OTHER_FILES += \
     qml/Main.qml \
+    qml/Cover.qml \
     qml/Keyboard.qml \
     qml/Key.qml \
     qml/Lineview.qml \
