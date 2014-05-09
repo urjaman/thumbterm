@@ -69,10 +69,8 @@ Rectangle {
             color: keyboard.keyFgColor
 
             opacity: key.labelOpacity * (highlighted ? 1.0 : 0.5)
-            Behavior on opacity { NumberAnimation { duration: 100 } }
 
             font.pointSize: (highlighted ? 24 : 14) * (text.length > 1 ? 0.5 : 1.0)
-            Behavior on font.pointSize { NumberAnimation { duration: 100 } }
         }
 
         Text {
@@ -96,10 +94,8 @@ Rectangle {
             color: keyboard.keyFgColor
 
             opacity: key.labelOpacity * (highlighted ? 1.0 : 0.2)
-            Behavior on opacity { NumberAnimation { duration: 100 } }
 
             font.pointSize: (highlighted ? 24 : 14) * (text.length > 1 ? 0.5 : 1.0)
-            Behavior on font.pointSize { NumberAnimation { duration: 100 } }
         }
     }
 
