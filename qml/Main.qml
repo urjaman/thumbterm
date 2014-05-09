@@ -331,15 +331,16 @@ ApplicationWindow {
         }
 
         function vkbKeypress(key,modifiers) {
-            // Key values taken from qnamespace.h: https://qt.gitorious.org/qt/qt/source/57756e72adf2081137b97f0e689dd16c770d10b1:src/corelib/global/qnamespace.h
+            // Key values taken from qnamespace.h: https://qt.gitorious.org/qt/qt/source/src/corelib/global/qnamespace.h
             var Key_Left = 0x01000012;
             var Key_Up = 0x01000013;
             var Key_Right = 0x01000014;
             var Key_Down = 0x01000015;
             var Key_PageUp = 0x01000016;
             var Key_PageDown = 0x01000017;
+            var Key_Space = 0x20;
 
-            // If the user pressed an arrow key or the Page Up / Page Down key,
+            // If the user pressed an arrow key, the Page Up / Page Down key or the space key,
             // process the key press normally but don't wake the keyboard (to make
             // it easier to navigate through long documents without having the keyboard
             // constantly pop-up).
@@ -348,7 +349,8 @@ ApplicationWindow {
                 key != Key_Right &&
                 key != Key_Down &&
                 key != Key_PageUp &&
-                key != Key_PageDown)
+                key != Key_PageDown &&
+                key != Key_Space)
             {
                 wakeVKB();
             }
