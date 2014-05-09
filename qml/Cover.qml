@@ -20,7 +20,7 @@ CoverBackground {
         }
 
         font {
-            pixelSize: theme.fontSizeSmall
+            pixelSize: Theme.fontSizeSmall
         }
 
         color: "#CCCCCC"

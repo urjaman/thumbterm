@@ -33,7 +33,7 @@
 
 MainWindow::MainWindow()
 {
-    rootContext()->setContextProperty("windowHasFocus", false);
+    rootContext()->setContextProperty("windowHasFocus",  QVariant(false));
 }
 
 MainWindow::~MainWindow()
@@ -42,14 +42,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::focusInEvent(QFocusEvent *event)
 {
-    rootContext()->setContextProperty("windowHasFocus", true);
+    rootContext()->setContextProperty("windowHasFocus", QVariant(true));
     QQuickView::focusInEvent(event);
     emit focusChanged(true);
 }
 
 void MainWindow::focusOutEvent(QFocusEvent *event)
 {
-    rootContext()->setContextProperty("windowHasFocus", false);
+    rootContext()->setContextProperty("windowHasFocus", QVariant(false));
     QQuickView::focusOutEvent(event);
     emit focusChanged(false);
 }
