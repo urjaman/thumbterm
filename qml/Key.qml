@@ -47,6 +47,13 @@ Rectangle {
 
     property bool shiftActive: (keyboard.keyModifiers & Qt.ShiftModifier) && !sticky
 
+    Rectangle {
+        id: highlightedBackground
+        anchors.fill: parent
+        visible: false
+        color: keyboard.keyHilightBgColor
+    }
+
     Image {
         id: keyImage
         anchors.centerIn: parent
@@ -115,7 +122,7 @@ Rectangle {
         pressMouseX = x;
         pressMouseY = y;
 
-        key.color = keyboard.keyHilightBgColor
+        highlightedBackground.visible = true;
         keyboard.currentKeyPressed = key;
         util.keyPressFeedback();
 
@@ -153,7 +160,7 @@ Rectangle {
     function handleRelease(touchArea, x, y) {
         keyRepeatStarter.stop();
         keyRepeatTimer.stop();
-        key.color = keyboard.keyBgColor;
+        highlightedBackground.visible = false;
         keyboard.currentKeyPressed = 0;
 
         if (sticky && !becomesSticky) {
