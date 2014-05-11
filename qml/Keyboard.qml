@@ -32,7 +32,6 @@ Rectangle {
     property variant currentKeyPressed: 0
 
     property string keyFgColor: "#ffffff"
-    property string keyBgColor: keyboard.active ? "#8800FF00" : "#00000000"
     property string keyHilightBgColor: "#ffffff"
     property string keyBorderColor:  "#00000000"
 
@@ -93,6 +92,27 @@ Rectangle {
         } else {
             visualKeyFeedbackRect.visible = false;
         }
+    }
+
+    // Returns whether or not the provided key is a passive key,
+    // i.e. a key that doesn't wake up the keyboard when pressed.
+    function isPassiveKey (key) {
+        // Key values taken from qnamespace.h: https://qt.gitorious.org/qt/qt/source/src/corelib/global/qnamespace.h
+        var Key_Left = 0x01000012;
+        var Key_Up = 0x01000013;
+        var Key_Right = 0x01000014;
+        var Key_Down = 0x01000015;
+        var Key_PageUp = 0x01000016;
+        var Key_PageDown = 0x01000017;
+        var Key_Space = 0x20;
+
+        return (key === Key_Left ||
+                key === Key_Up ||
+                key === Key_Right ||
+                key === Key_Down ||
+                key === Key_PageUp ||
+                key === Key_PageDown ||
+                key === Key_Space);
     }
 
     function reloadLayout()

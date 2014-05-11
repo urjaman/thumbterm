@@ -32,6 +32,10 @@ Rectangle {
     property int stickiness: 0      // current stickiness status
     property real labelOpacity: keyboard.active ? 1.0 : 0.2
 
+    property string backgroundColorActive: "#9900FF00"
+    property string backgroundColorInactive: "transparent"
+    property string backgroundColorInactivePassiveKey: "#1A00FF00"
+
     // mouse input handling
     property int clickThreshold: 20
     property bool isClick: false
@@ -40,7 +44,18 @@ Rectangle {
 
     width: window.width/12   // some default
     height: window.height/8 < 55 ? window.height/8 : 55
-    color: label=="" ? "transparent" : keyboard.keyBgColor
+
+    color: label=="" ?
+               "transparent"
+             :
+               keyboard.active ?
+                   backgroundColorActive
+                 :
+                   keyboard.isPassiveKey(code) ?
+                       backgroundColorInactivePassiveKey
+                     :
+                       backgroundColorInactive
+
     border.color: label=="" ? "transparent" : keyboard.keyBorderColor
     border.width: 0
     radius: 0
