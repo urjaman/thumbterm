@@ -360,7 +360,12 @@ ApplicationWindow {
 
             lineView.duration = window.fadeOutTime;
             textrender.duration = window.fadeOutTime;
-            fadeTimer.restart();
+
+            if (menu.keyboardFadeOutDelay > 0)
+            {
+                fadeTimer.restart();
+            }
+
             vkb.active = true;
             lineView.setPosition(vkb.active);
             util.updateSwipeLock(!vkb.active);

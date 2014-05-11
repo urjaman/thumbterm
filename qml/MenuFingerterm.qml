@@ -468,7 +468,10 @@ Rectangle {
                         height: 20
                         color: "#ffffff"
                         font.pointSize: util.uiFontSize()-1;
-                        text: "VKB delay: " + vkbDelaySlider.keyboardFadeOutDelayLabel + " ms"
+                        text: (vkbDelaySlider.keyboardFadeOutDelayLabel <= 0) ?
+                                  "VKB auto-hide disabled"
+                                :
+                                  "VKB delay: " + vkbDelaySlider.keyboardFadeOutDelayLabel + " ms"
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Rectangle {
@@ -483,7 +486,10 @@ Rectangle {
                     Rectangle {
                         id: vkbDelaySlider
                         property int keyboardFadeOutDelayLabel: keyboardFadeOutDelay
-                        x: (keyboardFadeOutDelay-1000)/9000 * (vkbDelaySliderArea.width - vkbDelaySlider.width)
+                        x: keyboardFadeOutDelay <= 0 ?
+                               vkbDelaySliderArea.width - vkbDelaySlider.width
+                             :
+                               (keyboardFadeOutDelay-1000)/9000 * (vkbDelaySliderArea.width - vkbDelaySlider.width)
                         y: 20
                         width: 60
                         radius: 15
@@ -493,7 +499,10 @@ Rectangle {
                         onXChanged: {
                             if (vkbDelaySliderMA.drag.active)
                                 vkbDelaySlider.keyboardFadeOutDelayLabel =
-                                        Math.floor((1000+vkbDelaySlider.x/vkbDelaySliderMA.drag.maximumX*9000)/250)*250;
+                                        (vkbDelaySlider.x === vkbDelaySliderMA.drag.maximumX) ?
+                                            -1
+                                          :
+                                            Math.floor((1000+vkbDelaySlider.x/vkbDelaySliderMA.drag.maximumX*9000)/250)*250;
                         }
                         MouseArea {
                             id: vkbDelaySliderMA
