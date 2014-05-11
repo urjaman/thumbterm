@@ -151,6 +151,15 @@ ApplicationWindow {
                     if (key != null) {
                         if (!key.handleMove(multiTouchArea, touchPoint.x, touchPoint.y)) {
                             delete multiTouchArea.pressedKeys[touchPoint.pointId];
+
+                            // This means that the user swiped out of the current key.
+                            // Find the new key in that position and make it the currently
+                            // highlighted key.
+                            key = vkb.keyAt(touchPoint.x, touchPoint.y);
+                            if (key != null) {
+                                key.handlePress(multiTouchArea, touchPoint.x, touchPoint.y);
+                            }
+                            multiTouchArea.pressedKeys[touchPoint.pointId] = key;
                         }
                     }
                 });

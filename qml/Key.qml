@@ -132,6 +132,32 @@ Rectangle {
         anchors.topMargin: key.height/2
     }
 
+    function isAutoRepeatKey() {
+        // Key values taken from qnamespace.h: https://qt.gitorious.org/qt/qt/source/src/corelib/global/qnamespace.h
+        var Key_Left = 0x01000012;
+        var Key_Up = 0x01000013;
+        var Key_Right = 0x01000014;
+        var Key_Down = 0x01000015;
+        var Key_PageUp = 0x01000016;
+        var Key_PageDown = 0x01000017;
+        var Key_Space = 0x20;
+        var Key_Backspace = 0x01000003;
+        var Key_Return = 0x01000004;
+        var Key_Delete = 0x01000007;
+
+        return  code === Key_Left ||
+                code === Key_Up ||
+                code === Key_Right ||
+                code === Key_Down ||
+                code === Key_PageUp ||
+                code === Key_PageDown ||
+                code === Key_Space ||
+                code === Key_Backspace ||
+                code === Key_Return ||
+                code === Key_Delete
+                ;
+    }
+
     function handlePress(touchArea, x, y) {
         isClick = true;
         pressMouseX = x;
@@ -141,7 +167,9 @@ Rectangle {
         keyboard.currentKeyPressed = key;
         util.keyPressFeedback();
 
-        keyRepeatStarter.start();
+        if (isAutoRepeatKey()) {
+            keyRepeatStarter.start();
+        }
 
         if (sticky) {
             keyboard.keyModifiers |= code;
@@ -195,6 +223,14 @@ Rectangle {
             // first non-sticky press will cause the sticky to be released
             if( !sticky && keyboard.resetSticky != 0 && keyboard.resetSticky !== key ) {
                 resetSticky.setStickiness(0);
+            }
+        }
+        else {
+            // If user swiped out of a sticky key, cancel the stickiness
+            if (sticky) {
+                keyboard.keyModifiers &= ~code;
+                key.becomesSticky = false;
+                keyboard.currentStickyPressed = null;
             }
         }
     }
