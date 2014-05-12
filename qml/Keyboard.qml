@@ -81,7 +81,10 @@ Rectangle {
     }
 
     onCurrentKeyPressedChanged: {
-        if(currentKeyPressed != 0 && currentKeyPressed.currentLabel.length === 1 && currentKeyPressed.currentLabel !== " ") {
+        if(     currentKeyPressed != 0 &&
+                currentKeyPressed.currentLabel.length === 1 &&
+                currentKeyPressed.currentLabel !== " " &&
+                active) {
             visualKeyFeedbackRect.label = currentKeyPressed.currentLabel
             visualKeyFeedbackRect.width = currentKeyPressed.width*2
             visualKeyFeedbackRect.height = currentKeyPressed.height*2.5

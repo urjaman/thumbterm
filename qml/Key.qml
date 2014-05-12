@@ -1,4 +1,4 @@
-/*
+ /*
     Copyright 2011-2012 Heikki Holstila <heikki.holstila@gmail.com>
 
     This file is part of FingerTerm.
@@ -163,7 +163,10 @@ Rectangle {
         pressMouseX = x;
         pressMouseY = y;
 
-        highlightedBackground.visible = true;
+        if (keyboard.active) {
+            highlightedBackground.visible = true;
+        }
+
         keyboard.currentKeyPressed = key;
         util.keyPressFeedback();
 
