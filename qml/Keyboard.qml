@@ -37,7 +37,7 @@ Rectangle {
 
     property bool active: false
 
-    property int outmargins: 7 //util.settingsValue("ui/keyboardMargins")
+    property int outmargins: 7
     property int keyspacing: 0
     property int keysPerRow: keyLoader.vkbColumns()
     property real keywidth: (keyboard.width - keyspacing*keysPerRow - outmargins*2)/keysPerRow;
