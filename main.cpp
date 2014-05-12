@@ -227,7 +227,7 @@ void defaultSettings(QSettings* settings)
     if(!settings->contains("ui/vkbShowMethod"))
         settings->setValue("ui/vkbShowMethod", "move");  // "fade", "move", "off"
     if(!settings->contains("ui/keyPressFeedback"))
-        settings->setValue("ui/keyPressFeedback", true);
+        settings->setValue("ui/keyPressFeedback", false);
     if(!settings->contains("ui/dragMode"))
         settings->setValue("ui/dragMode", "scroll");  // "gestures, "scroll", "select" ("off" would also be ok)
 
