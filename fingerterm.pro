@@ -1,9 +1,5 @@
 QT = core gui qml quick dbus feedback
 
-contains(MEEGO_EDITION,harmattan): {
-    CONFIG += meegotouch
-}
-
 TEMPLATE = app
 TARGET = fingerterm
 DEPENDPATH += .
@@ -59,21 +55,7 @@ maemo5 {
     INSTALLS += target
 }
 
-contains(MEEGO_EDITION,harmattan) {
-    desktopfile.files = $${TARGET}.desktop
-    desktopfile.path = /usr/share/applications
-    INSTALLS += desktopfile
-}
-
-contains(MEEGO_EDITION,harmattan) {
-    icon.files = fingerterm.png
-    icon.path = /usr/share/icons/hicolor/80x80/apps
-    INSTALLS += icon
-}
-
-contains(MEEGO_EDITION,nemo) {
-    desktopfile.extra = cp $${TARGET}.desktop.nemo $${TARGET}.desktop
-    desktopfile.path = /usr/share/applications
-    desktopfile.files = $${TARGET}.desktop
-    INSTALLS += desktopfile
-}
+desktopfile.extra = cp $${TARGET}.desktop.nemo $${TARGET}.desktop
+desktopfile.path = /usr/share/applications
+desktopfile.files = $${TARGET}.desktop
+INSTALLS += desktopfile
