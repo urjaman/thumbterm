@@ -52,6 +52,7 @@ public:
     int fontWidth() { return iFontWidth; }
     int fontHeight() { return iFontHeight; }
     int fontDescent() { return iFontDescent; }
+    int fontAscent() { return iFontAscent; }
     int fontPointSize() { return iFont.pointSize(); }
     void setFontPointSize(int psize);
     bool showBufferScrollIndicator() { return iShowBufferScrollIndicator; }
@@ -84,6 +85,7 @@ private:
     int iFontWidth;
     int iFontHeight;
     int iFontDescent;
+    int iFontAscent;
     bool iShowBufferScrollIndicator;
 
     Terminal *iTerm;

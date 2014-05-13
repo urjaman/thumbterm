@@ -91,12 +91,13 @@ private:
     bool swipeModeSet;
     bool swipeAllowed;
 
-    void scrollBackBuffer(QPointF now, QPointF last);
+    bool scrollBackBuffer(QPointF now, QPointF last);
     void doGesture(PanGesture gesture);
     void clearNotifications();
     void selectionHelper(QPointF scenePos);
 
     QPointF dragOrigin;
+    QPointF pointWhenLastScrolled;
 
     bool iAllowGestures;
     bool newSelection;

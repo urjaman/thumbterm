@@ -281,6 +281,7 @@ void TextRender::setTerminal(Terminal *term)
     iFontHeight = fontMetrics.height();
     iFontWidth = fontMetrics.maxWidth();
     iFontDescent = fontMetrics.descent();
+    iFontAscent = fontMetrics.ascent();
 }
 
 void TextRender::updateTermSize()

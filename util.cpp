@@ -261,6 +261,7 @@ void Util::mousePress(float eventX, float eventY) {
         return;
 
     dragOrigin = QPointF(eventX, eventY);
+    pointWhenLastScrolled = dragOrigin;
     newSelection = true;
 }
 
@@ -271,7 +272,10 @@ void Util::mouseMove(float eventX, float eventY) {
         return;
 
     if(settingsValue("ui/dragMode")=="scroll") {
-        scrollBackBuffer(eventPos, dragOrigin);
+        if (scrollBackBuffer(eventPos, pointWhenLastScrolled)) {
+            pointWhenLastScrolled = eventPos;
+        }
+
         dragOrigin = eventPos;
     }
     else if(settingsValue("ui/dragMode")=="select" && iRenderer) {
@@ -299,7 +303,7 @@ void Util::mouseRelease(float eventX, float eventY) {
             doGesture(PanUp);
     }
     else if(settingsValue("ui/dragMode")=="scroll") {
-        scrollBackBuffer(eventPos, dragOrigin);
+       // scrollBackBuffer(eventPos, dragOrigin);
     }
     else if(settingsValue("ui/dragMode")=="select" && iRenderer) {
         selectionHelper(eventPos);
@@ -322,18 +326,30 @@ void Util::selectionHelper(QPointF scenePos)
     }
 }
 
-void Util::scrollBackBuffer(QPointF now, QPointF last)
+bool Util::scrollBackBuffer(QPointF now, QPointF last)
 {
     if(!iTerm)
-        return;
+        return false;
 
-    int xdist = qAbs(now.x() - last.x());
-    int ydist = qAbs(now.y() - last.y());
+    qreal xdist = qAbs(now.x() - last.x());
+    qreal ydist = qAbs(now.y() - last.y());
 
-    if(now.y() < last.y() && xdist < ydist*2)
-        iTerm->scrollBackBufferFwd(1);
-    else if(now.y() > last.y() && xdist < ydist*2)
-        iTerm->scrollBackBufferBack(1);
+    if (iRenderer->fontHeight() < 1)
+        return false;
+
+    int nbLines = ydist / iRenderer->fontHeight();
+
+    if (nbLines < 1)
+        return false;
+
+    if(now.y() < last.y() && xdist < ydist*2) {
+        iTerm->scrollBackBufferFwd(nbLines);
+    }
+    else if(now.y() > last.y() && xdist < ydist*2) {
+        iTerm->scrollBackBufferBack(nbLines);
+    }
+
+    return true;
 }
 
 void Util::doGesture(Util::PanGesture gesture)
