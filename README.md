@@ -45,7 +45,7 @@ Several of these changes required the use of Sailfish OS-specific components. Th
 
 3) Clone this repo:
 
-    git clone hhttps://github.com/mehdime/fingerterm.git
+    git clone https://github.com/mehdime/fingerterm.git
     
 4) Launch Qt Creator and open the project file (fingerterm.pro).
 
