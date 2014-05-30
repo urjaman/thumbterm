@@ -14,6 +14,7 @@ fingerterm is the Terminal application that ships with Sailfish OS on the [Jolla
 - Pressing an arrow key, the Page Up / Page Down key or the space key doesn't activate the keyboard anymore (but the key press is otherwise processed normally). This makes it easier to, for example, navigate long documents in vim. You can now scroll through a long document using the arrow keys or the Page Up / Page Down key without causing the keyboard to activate and cover most of the screen. 
 - Disabled auto-repeat for alpha-numeric and special character keys and allow swiping from one key to the next (like the built-in keyboard) to facilitate correcting tapping mistakes.
 - You can now disable the virtual keyboard auto-hide feature by sliding the the "VKB delay" slider in the settings all the way to the right.
+- Better, smoother scrolling when "Drag mode" is set to "Scroll" in Terminal's settings.
 - Unset the POSIXLY_CORRECT environment variable on startup as [having it set causes bash to start in POSIX mode](http://www.delorie.com/gnu/docs/bash/bashref_62.html#IDX214) which causes it to [not read the .bashrc on startup](http://lists.gnu.org/archive/html/bug-bash/2001-10/msg00117.html)
 
 ###Cosmetic changes
