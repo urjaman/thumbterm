@@ -1180,7 +1180,7 @@ const QStringList Terminal::grabURLsFromBuffer()
     QByteArray buf;
 
     //backbuffer
-    if ((iUtil->settingsValue("general/grabUrlsFromBackbuffer").toBool()
+    if ((iUtil->settingsValue("gen/grabUrlsFromBackbuffer").toBool()
          && !iUseAltScreenBuffer)
         || backBufferScrollPos() > 0)  //a lazy workaround: just grab everything when the buffer is being scrolled (TODO: make a proper fix)
     {

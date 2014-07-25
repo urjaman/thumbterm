@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
                 execCmd = QString(argv[i+1]);
         }
         if(execCmd.isEmpty()) {
-            execCmd = settings->value("general/execCmd").toString();
+            execCmd = settings->value("gen/execCmd").toString();
         }
         if(execCmd.isEmpty()) {
             // execute the user's default shell
@@ -193,14 +193,14 @@ void defaultSettings(QSettings* settings)
 {
     if(!settings->contains("ui/orientationLockMode"))
         settings->setValue("ui/orientationLockMode", "auto");
-    if(!settings->contains("general/execCmd"))
-        settings->setValue("general/execCmd", "");
-    if(!settings->contains("general/visualBell"))
-        settings->setValue("general/visualBell", true);
-    if(!settings->contains("general/backgroundBellNotify"))
-        settings->setValue("general/backgroundBellNotify", true);
-    if(!settings->contains("general/grabUrlsFromBackbuffer"))
-        settings->setValue("general/grabUrlsFromBackbuffer", false);
+    if(!settings->contains("gen/execCmd"))
+        settings->setValue("gen/execCmd", "");
+    if(!settings->contains("gen/visualBell"))
+        settings->setValue("gen/visualBell", true);
+    if(!settings->contains("gen/backgroundBellNotify"))
+        settings->setValue("gen/backgroundBellNotify", true);
+    if(!settings->contains("gen/grabUrlsFromBackbuffer"))
+        settings->setValue("gen/grabUrlsFromBackbuffer", false);
 
     if(!settings->contains("terminal/envVarTERM"))
         settings->setValue("terminal/envVarTERM", "xterm");

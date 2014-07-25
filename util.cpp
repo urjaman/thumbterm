@@ -225,7 +225,7 @@ void Util::bellAlert()
         return;
 
 #ifdef MEEGO_EDITION_HARMATTAN
-    if(settingsValue("general/backgroundBellNotify").toBool() &&
+    if(settingsValue("gen/backgroundBellNotify").toBool() &&
        !iWindow->hasFocus())
     {
         MRemoteAction act(MComponentData::instance()->serviceName(),
@@ -236,11 +236,11 @@ void Util::bellAlert()
         notif.setImage("/usr/share/icons/hicolor/80x80/apps/fingerterm.png");
         notif.setAction(act);
         notif.publish();
-    } else if( settingsValue("general/visualBell").toBool() ) {
+    } else if( settingsValue("gen/visualBell").toBool() ) {
         emit visualBell();
     }
 #else
-    if( settingsValue("general/visualBell").toBool() )
+    if( settingsValue("gen/visualBell").toBool() )
         emit visualBell();
 #endif
 }
