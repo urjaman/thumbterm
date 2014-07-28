@@ -58,11 +58,11 @@ PageStackWindow {
             property int termW: 0
             property int termH: 0
             text: {
-                var str = "<font size=\"+3\">FingerTerm " + util.versionString() + "</font><br>\n" +
+                var str = "<font size=\"+3\">ThumbTerm " + util.versionString() + "</font><br>\n" +
                         "<font size=\"+1\">" +
                         "Config files for adjusting settings are at:<br>\n" +
                         util.configPath() + "/<br><br>\n" +
-                        "Documentation:<br>\n<a href=\"https://github.com/OlliV/fingerterm/wiki\">https://github.com/OlliV/fingerterm/wiki</a>"
+                        "Documentation:<br>\n<a href=\"https://github.com/OlliV/thumbterm/wiki\">https://github.com/OlliV/thumbterm/wiki</a>"
                 if (termH != 0 && termW != 0) {
                     str += "<br><br>Current window title: <font color=\"gray\">" + windowTitle.substring(0,40) + "</font>"; //cut long window title
                     if(windowTitle.length>40)
