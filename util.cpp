@@ -304,6 +304,8 @@ void Util::mouseRelease(float eventX, float eventY) {
     }
     else if(settingsValue("ui/dragMode")=="scroll") {
         // do gestures left/right even if in scroll mode if not actually scrolled
+        // except it doesnt work.
+#if 0
         if (iTerm->backBufferScrollPos() == 0) {
             int xdist = qAbs(eventPos.x() - dragOrigin.x());
             int ydist = qAbs(eventPos.y() - dragOrigin.y());
@@ -312,6 +314,7 @@ void Util::mouseRelease(float eventX, float eventY) {
             else if(eventPos.x() > dragOrigin.x()+reqDragLength && xdist > ydist*2)
                 doGesture(PanRight);
         }
+#endif
     }
     else if(settingsValue("ui/dragMode")=="select" && iRenderer) {
         selectionHelper(eventPos);
