@@ -303,7 +303,15 @@ void Util::mouseRelease(float eventX, float eventY) {
             doGesture(PanUp);
     }
     else if(settingsValue("ui/dragMode")=="scroll") {
-       // scrollBackBuffer(eventPos, dragOrigin);
+        // do gestures left/right even if in scroll mode if not actually scrolled
+        if (iTerm->backBufferScrollPos() == 0) {
+            int xdist = qAbs(eventPos.x() - dragOrigin.x());
+            int ydist = qAbs(eventPos.y() - dragOrigin.y());
+            if(eventPos.x() < dragOrigin.x()-reqDragLength && xdist > ydist*2)
+                doGesture(PanLeft);
+            else if(eventPos.x() > dragOrigin.x()+reqDragLength && xdist > ydist*2)
+                doGesture(PanRight);
+        }
     }
     else if(settingsValue("ui/dragMode")=="select" && iRenderer) {
         selectionHelper(eventPos);
