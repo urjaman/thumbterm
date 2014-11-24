@@ -463,24 +463,24 @@ ApplicationWindow {
         function lockModeStringToQtEnum(stringMode) {
             switch (stringMode) {
             case "auto":
-                return PageOrientation.Automatic
+                return Orientation.All
             case "landscape":
-                return PageOrientation.LockLandscape
+                return Orientation.Landscape | Orientation.LandscapeInverted
             case "portrait":
-                return PageOrientation.LockPortrait
+                return Orientation.Portrait | Orientation.PortraitInverted
             }
         }
 
         function getOrientationLockMode()
         {
             var stringMode = util.settingsValue("ui/orientationLockMode");
-            page.orientationLock = lockModeStringToQtEnum(stringMode)
+            page.allowedOrientations = lockModeStringToQtEnum(stringMode)
         }
 
         function setOrientationLockMode(stringMode)
         {
             util.setSettingsValue("ui/orientationLockMode", stringMode);
-            page.orientationLock = lockModeStringToQtEnum(stringMode)
+            page.allowedOrientations = lockModeStringToQtEnum(stringMode)
         }
     }
     }
