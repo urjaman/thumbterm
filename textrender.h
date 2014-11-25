@@ -85,7 +85,7 @@ private:
     int iFontWidth;
     int iFontHeight;
     int iFontDescent;
-    int iFontAscent;
+    int iFontLastPtSize;
     bool iShowBufferScrollIndicator;
 
     Terminal *iTerm;

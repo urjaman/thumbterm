@@ -71,6 +71,7 @@ TextRender::TextRender(QQuickItem *parent) :
         qFatal("invalid color table");
 
     iShowBufferScrollIndicator = false;
+    iFontLastPtSize = 0;
 }
 
 TextRender::~TextRender()
@@ -273,15 +274,21 @@ void TextRender::setTerminal(Terminal *term)
         qFatal("textrender: util class not set");
 
     iTerm = term;
+    iFontLastPtSize = iUtil->settingsValue("ui/fontSize").toInt();
 
-    iFont = QFont(iUtil->settingsValue("ui/fontFamily").toString(),
-                  iUtil->settingsValue("ui/fontSize").toInt());
+    iFont = QFont(iUtil->settingsValue("ui/fontFamily").toString(), iFontLastPtSize);
     iFont.setBold(false);
+
+    if (iFont.pointSizeF() != -1) {
+        // 0.5pt resolution
+        qreal size = qRound(iFont.pointSizeF()*2.0);
+        iFont.setPointSizeF(size/2.0);
+    }
+
     QFontMetrics fontMetrics(iFont);
     iFontHeight = fontMetrics.height();
     iFontWidth = fontMetrics.maxWidth();
     iFontDescent = fontMetrics.descent();
-    iFontAscent = fontMetrics.ascent();
 }
 
 void TextRender::updateTermSize()
@@ -295,9 +302,17 @@ void TextRender::updateTermSize()
 
 void TextRender::setFontPointSize(int psize)
 {
-    if (iFont.pointSize() != psize)
+    if (iFontLastPtSize != psize)
     {
+        iFontLastPtSize = psize;
         iFont.setPointSize(psize);
+
+        if (iFont.pointSizeF() != -1) {
+            // 0.5pt resolution
+            qreal size = qRound(iFont.pointSizeF()*2.0);
+            iFont.setPointSizeF(size/2.0);
+        }
+
         QFontMetrics fontMetrics(iFont);
         iFontHeight = fontMetrics.height();
         iFontWidth = fontMetrics.maxWidth();
