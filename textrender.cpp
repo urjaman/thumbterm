@@ -274,8 +274,8 @@ void TextRender::setTerminal(Terminal *term)
 
     iTerm = term;
 
-    iFont = QFont(iUtil->settingsValue("ui/fontFamily").toString());
-    iFont.setPixelSize(iUtil->settingsValue("ui/fontSize").toInt());
+    iFont = QFont(iUtil->settingsValue("ui/fontFamily").toString(),
+                  iUtil->settingsValue("ui/fontSize").toInt());
     iFont.setBold(false);
     QFontMetrics fontMetrics(iFont);
     iFontHeight = fontMetrics.height();
@@ -293,11 +293,11 @@ void TextRender::updateTermSize()
     iTerm->setTermSize(s);
 }
 
-void TextRender::setFontPixelSize(int psize)
+void TextRender::setFontPointSize(int psize)
 {
-    if (iFont.pixelSize() != psize)
+    if (iFont.pointSize() != psize)
     {
-        iFont.setPixelSize(psize);
+        iFont.setPointSize(psize);
         QFontMetrics fontMetrics(iFont);
         iFontHeight = fontMetrics.height();
         iFontWidth = fontMetrics.maxWidth();

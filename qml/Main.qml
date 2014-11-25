@@ -103,7 +103,7 @@ ApplicationWindow {
             y: -(height+1)
             z: 20
             property int duration: 0;
-            onFontPixelSizeChanged: {
+            onFontPointSizeChanged: {
                 lineView.setPosition(vkb.active)
             }
         }
@@ -254,7 +254,7 @@ ApplicationWindow {
             }
 
             onFontSizeChanged: {
-                lineView.fontPixelSize = textrender.fontPixelSize;
+                lineView.fontPointSize = textrender.fontPointSize;
             }
 
             onCutAfterChanged: {
