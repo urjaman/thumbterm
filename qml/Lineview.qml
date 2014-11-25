@@ -22,7 +22,7 @@ import QtQuick 2.0
 Rectangle {
     id: lineView
     property variant lines: [""]
-    property int fontPointSize: util.settingsValue("ui/fontSize");
+    property int fontPixelSize: util.settingsValue("ui/fontSize");
     property int cursorX: 1
     property int cursorWidth: 10
     property int cursorHeight: 10
@@ -40,7 +40,7 @@ Rectangle {
         visible: false
         text: "X"
         font.family: util.settingsValue("ui/fontFamily");
-        font.pointSize: lineView.fontPointSize
+        font.pixelSize: lineView.fontPixelSize
     }
 
     Rectangle {
@@ -71,7 +71,7 @@ Rectangle {
                 Text {
                     color: "#ffffff"
                     font.family: util.settingsValue("ui/fontFamily");
-                    font.pointSize: lineView.fontPointSize
+                    font.pixelSize: lineView.fontPixelSize
                     text: modelData
                     textFormat: Text.PlainText
                     wrapMode: Text.NoWrap

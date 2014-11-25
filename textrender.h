@@ -33,7 +33,7 @@ class TextRender : public QQuickPaintedItem
     Q_PROPERTY(int myHeight READ myHeight WRITE setMyHeight NOTIFY myHeightChanged)
     Q_PROPERTY(int fontWidth READ fontWidth NOTIFY fontSizeChanged)
     Q_PROPERTY(int fontHeight READ fontHeight NOTIFY fontSizeChanged)
-    Q_PROPERTY(int fontPointSize READ fontPointSize WRITE setFontPointSize NOTIFY fontSizeChanged)
+    Q_PROPERTY(int fontPixelSize READ fontPixelSize WRITE setFontPixelSize NOTIFY fontSizeChanged)
     Q_PROPERTY(bool showBufferScrollIndicator READ showBufferScrollIndicator WRITE setShowBufferScrollIndicator NOTIFY showBufferScrollIndicatorChanged)
 
     Q_OBJECT
@@ -53,8 +53,8 @@ public:
     int fontHeight() { return iFontHeight; }
     int fontDescent() { return iFontDescent; }
     int fontAscent() { return iFontAscent; }
-    int fontPointSize() { return iFont.pointSize(); }
-    void setFontPointSize(int psize);
+    int fontPixelSize() { return iFont.pixelSize(); }
+    void setFontPixelSize(int psize);
     bool showBufferScrollIndicator() { return iShowBufferScrollIndicator; }
     void setShowBufferScrollIndicator(bool s) { if(iShowBufferScrollIndicator!=s) { iShowBufferScrollIndicator=s; emit showBufferScrollIndicatorChanged(); } }
 
