@@ -435,6 +435,7 @@ ApplicationWindow {
 
         Component.onCompleted: {
             util.updateSwipeLock(vkb.active)
+            getOrientationLockMode()
             if( util.settingsValue("state/showWelcomeScreen") === true )
                 aboutDialog.state = "visible";
         }
