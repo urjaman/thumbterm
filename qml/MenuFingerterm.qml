@@ -184,8 +184,8 @@ Rectangle {
                                     Button {
                                         text: "<font size=\"+3\">+</font>"
                                         onClicked: {
-                                            textrender.fontPixelSize = textrender.fontPixelSize + 1;
-                                            lineView.fontPixelSize = textrender.fontPixelSize;
+                                            textrender.fontPointSize = textrender.fontPointSize + 1;
+                                            lineView.fontPointSize = textrender.fontPointSize;
                                             util.notifyText(term.termSize().width+"x"+term.termSize().height);
                                         }
                                         width: 90
@@ -194,8 +194,8 @@ Rectangle {
                                     Button {
                                         text: "<font size=\"+3\">-</font>"
                                         onClicked: {
-                                            textrender.fontPixelSize = textrender.fontPixelSize - 1;
-                                            lineView.fontPixelSize = textrender.fontPixelSize;
+                                            textrender.fontPointSize = textrender.fontPointSize - 1;
+                                            lineView.fontPointSize = textrender.fontPointSize;
                                             util.notifyText(term.termSize().width+"x"+term.termSize().height);
                                         }
                                         width: 90
