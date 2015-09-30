@@ -249,6 +249,31 @@ void Terminal::keyPress(int key, int modifiers, QString text)
         if( key==Qt::Key_Delete )
             toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
 
+        if( key==Qt::Key_F1 )
+            toWrite += QString("%1OP").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F2 )
+            toWrite += QString("%1OQ").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F3 )
+            toWrite += QString("%1OR").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F4 )
+            toWrite += QString("%1OS").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F5 )
+            toWrite += QString("%1[15~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F6 )
+            toWrite += QString("%1[17~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F7 )
+            toWrite += QString("%1[18~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F8 )
+            toWrite += QString("%1[19~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F9 )
+            toWrite += QString("%1[20~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F10 )
+            toWrite += QString("%1[21~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F11 )
+            toWrite += QString("%1[23~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_F12 )
+            toWrite += QString("%1[24~").arg(ch_ESC).toLatin1();
+
     } else {
         char modChar = '1' + modcode;
 
@@ -272,6 +297,31 @@ void Terminal::keyPress(int key, int modifiers, QString text)
             toWrite += QString("%1[2;%2~").arg(ch_ESC).arg(modChar).toLatin1();
         if( key==Qt::Key_Delete )
             toWrite += QString("%1[3;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+
+        if( key==Qt::Key_F1 )
+            toWrite += QString("%1[1;%2P").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F2 )
+            toWrite += QString("%1[1;%2Q").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F3 )
+            toWrite += QString("%1[1;%2R").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F4 )
+            toWrite += QString("%1[1;%2S").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F5 )
+            toWrite += QString("%1[15;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F6 )
+            toWrite += QString("%1[17;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F7 )
+            toWrite += QString("%1[18;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F8 )
+            toWrite += QString("%1[19;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F9 )
+            toWrite += QString("%1[20;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F10 )
+            toWrite += QString("%1[21;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F11 )
+            toWrite += QString("%1[23;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_F12 )
+            toWrite += QString("%1[24;%2~").arg(ch_ESC).arg(modChar).toLatin1();
 
     }
 
