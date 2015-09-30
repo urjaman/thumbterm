@@ -180,6 +180,8 @@ void Terminal::keyPress(int key, int modifiers, QString text)
 
     resetBackBufferScrollPos();
 
+    if ((!text.isEmpty()) && (text[0].unicode() == 0)) text.clear();
+
     if (c.isLetter()) {
         c = ((modifiers & Qt::ShiftModifier) != 0) ? c.toUpper() : c.toLower();
     }
