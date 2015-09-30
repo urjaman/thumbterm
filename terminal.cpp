@@ -219,18 +219,61 @@ void Terminal::keyPress(int key, int modifiers, QString text)
         return;
     }
 
-    char cursorModif='[';
-    if(iAppCursorKeys)
-        cursorModif = 'O';
+    int modcode = (modifiers & Qt::ShiftModifier ? 1 : 0) | 
+                  (modifiers & Qt::AltModifier ? 2 : 0) |
+                  (modifiers & Qt::ControlModifier ? 4 : 0);
 
-    if( key==Qt::Key_Up )
-        toWrite += QString("%1%2A").arg(ch_ESC).arg(cursorModif).toLatin1();
-    if( key==Qt::Key_Down )
-        toWrite += QString("%1%2B").arg(ch_ESC).arg(cursorModif).toLatin1();
-    if( key==Qt::Key_Right )
-        toWrite += QString("%1%2C").arg(ch_ESC).arg(cursorModif).toLatin1();
-    if( key==Qt::Key_Left )
-        toWrite += QString("%1%2D").arg(ch_ESC).arg(cursorModif).toLatin1();
+    if (modcode == 0) {
+        char cursorModif='[';
+        if(iAppCursorKeys)
+            cursorModif = 'O';
+
+        if( key==Qt::Key_Up )
+            toWrite += QString("%1%2A").arg(ch_ESC).arg(cursorModif).toLatin1();
+        if( key==Qt::Key_Down )
+            toWrite += QString("%1%2B").arg(ch_ESC).arg(cursorModif).toLatin1();
+        if( key==Qt::Key_Right )
+            toWrite += QString("%1%2C").arg(ch_ESC).arg(cursorModif).toLatin1();
+        if( key==Qt::Key_Left )
+            toWrite += QString("%1%2D").arg(ch_ESC).arg(cursorModif).toLatin1();
+        if( key==Qt::Key_PageUp )
+            toWrite += QString("%1[5~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_PageDown )
+            toWrite += QString("%1[6~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_Home )
+            toWrite += QString("%1OH").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_End )
+            toWrite += QString("%1OF").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_Insert )
+            toWrite += QString("%1[2~").arg(ch_ESC).toLatin1();
+        if( key==Qt::Key_Delete )
+            toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
+
+    } else {
+        char modChar = '1' + modcode;
+
+        if( key==Qt::Key_Up )
+            toWrite += QString("%1[1;%2A").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Down )
+            toWrite += QString("%1[1;%2B").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Right )
+            toWrite += QString("%1[1;%2C").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Left )
+            toWrite += QString("%1[1;%2D").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_PageUp )
+            toWrite += QString("%1[5;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_PageDown )
+            toWrite += QString("%1[6;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Home )
+            toWrite += QString("%1[1;%2H").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_End )
+            toWrite += QString("%1[1;%2F").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Insert )
+            toWrite += QString("%1[2;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+        if( key==Qt::Key_Delete )
+            toWrite += QString("%1[3;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+
+    }
 
     if( key==Qt::Key_Enter || key==Qt::Key_Return ) {
         if(iNewLineMode)
@@ -242,17 +285,6 @@ void Terminal::keyPress(int key, int modifiers, QString text)
         toWrite += "\x7F";
     if( key==Qt::Key_Tab )
         toWrite = "\t";
-
-    if( key==Qt::Key_PageUp )
-        toWrite += QString("%1[5~").arg(ch_ESC).toLatin1();
-    if( key==Qt::Key_PageDown )
-        toWrite += QString("%1[6~").arg(ch_ESC).toLatin1();
-    if( key==Qt::Key_Home )
-        toWrite += QString("%1OH").arg(ch_ESC).toLatin1();
-    if( key==Qt::Key_End )
-        toWrite += QString("%1OF").arg(ch_ESC).toLatin1();
-    if( key==Qt::Key_Delete )
-        toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
 
     if( key==Qt::Key_Escape ) {
         toWrite += QString(1,ch_ESC);
