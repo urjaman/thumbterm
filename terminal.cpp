@@ -174,7 +174,7 @@ void Terminal::putString(QString str, bool unEscape)
         iPtyIFace->writeTerm(str);
 }
 
-void Terminal::keyPress(int key, int modifiers)
+void Terminal::keyPress(int key, int modifiers, QString text)
 {
     QChar c(key);
 
@@ -186,7 +186,7 @@ void Terminal::keyPress(int key, int modifiers)
 
     QString toWrite;
 
-    if (key <= 0xFF) {
+    if ((key <= 0xFF) || (!text.isEmpty())) {
         if((modifiers & Qt::AltModifier) != 0) {
             toWrite.append(ch_ESC);
         }
@@ -204,7 +204,11 @@ void Terminal::keyPress(int key, int modifiers)
                 qWarning() << "Ctrl+" << c << " does not translate into a control code";
             }
         } else {
-            toWrite.append(c);
+            if (text.isEmpty()) {
+                toWrite.append(c);
+            } else {
+                toWrite.append(text);
+            }
         }
 
         if (iPtyIFace) {
