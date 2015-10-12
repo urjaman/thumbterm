@@ -340,7 +340,6 @@ ApplicationWindow {
         }
 
         function vkbKeypress(key,modifiers) {
-
             // If the user pressed an arrow key, the Page Up / Page Down key or the space key,
             // process the key press normally but don't wake the keyboard (to make
             // it easier to navigate through long documents without having the keyboard
@@ -350,7 +349,7 @@ ApplicationWindow {
                 wakeVKB();
             }
 
-            term.keyPress(key,modifiers,"");
+            term.keyPress(key,modifiers);
         }
 
         function wakeVKB()

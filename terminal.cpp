@@ -174,174 +174,175 @@ void Terminal::putString(QString str, bool unEscape)
         iPtyIFace->writeTerm(str);
 }
 
-void Terminal::keyPress(int key, int modifiers, QString text)
+void Terminal::keyPress(int key, int modifiers, const QString& text)
 {
-    QChar c(key);
+    QString toWrite;
 
     resetBackBufferScrollPos();
 
-    if ((!text.isEmpty()) && (text[0].unicode() == 0)) text.clear();
+    if (key > 0xFF) {
+        int modcode = (modifiers & Qt::ShiftModifier ? 1 : 0) | 
+                      (modifiers & Qt::AltModifier ? 2 : 0) |
+                      (modifiers & Qt::ControlModifier ? 4 : 0);
+
+        if (modcode == 0) {
+            char cursorModif='[';
+            if(iAppCursorKeys)
+                cursorModif = 'O';
+
+            if( key==Qt::Key_Up )
+                toWrite += QString("%1%2A").arg(ch_ESC).arg(cursorModif).toLatin1();
+            if( key==Qt::Key_Down )
+                toWrite += QString("%1%2B").arg(ch_ESC).arg(cursorModif).toLatin1();
+            if( key==Qt::Key_Right )
+                toWrite += QString("%1%2C").arg(ch_ESC).arg(cursorModif).toLatin1();
+            if( key==Qt::Key_Left )
+                toWrite += QString("%1%2D").arg(ch_ESC).arg(cursorModif).toLatin1();
+            if( key==Qt::Key_PageUp )
+                toWrite += QString("%1[5~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_PageDown )
+                toWrite += QString("%1[6~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_Home )
+                toWrite += QString("%1OH").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_End )
+                toWrite += QString("%1OF").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_Insert )
+                toWrite += QString("%1[2~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_Delete )
+                toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
+
+            if( key==Qt::Key_F1 )
+                toWrite += QString("%1OP").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F2 )
+                toWrite += QString("%1OQ").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F3 )
+                toWrite += QString("%1OR").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F4 )
+                toWrite += QString("%1OS").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F5 )
+                toWrite += QString("%1[15~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F6 )
+                toWrite += QString("%1[17~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F7 )
+                toWrite += QString("%1[18~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F8 )
+                toWrite += QString("%1[19~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F9 )
+                toWrite += QString("%1[20~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F10 )
+                toWrite += QString("%1[21~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F11 )
+                toWrite += QString("%1[23~").arg(ch_ESC).toLatin1();
+            if( key==Qt::Key_F12 )
+                toWrite += QString("%1[24~").arg(ch_ESC).toLatin1();
+
+        } else {
+            char modChar = '1' + modcode;
+
+            if( key==Qt::Key_Up )
+                toWrite += QString("%1[1;%2A").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Down )
+                toWrite += QString("%1[1;%2B").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Right )
+                toWrite += QString("%1[1;%2C").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Left )
+                toWrite += QString("%1[1;%2D").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_PageUp )
+                toWrite += QString("%1[5;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_PageDown )
+                toWrite += QString("%1[6;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Home )
+                toWrite += QString("%1[1;%2H").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_End )
+                toWrite += QString("%1[1;%2F").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Insert )
+                toWrite += QString("%1[2;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_Delete )
+                toWrite += QString("%1[3;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+
+            if( key==Qt::Key_F1 )
+                toWrite += QString("%1[1;%2P").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F2 )
+                toWrite += QString("%1[1;%2Q").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F3 )
+                toWrite += QString("%1[1;%2R").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F4 )
+                toWrite += QString("%1[1;%2S").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F5 )
+                toWrite += QString("%1[15;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F6 )
+                toWrite += QString("%1[17;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F7 )
+                toWrite += QString("%1[18;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F8 )
+                toWrite += QString("%1[19;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F9 )
+                toWrite += QString("%1[20;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F10 )
+                toWrite += QString("%1[21;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F11 )
+                toWrite += QString("%1[23;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+            if( key==Qt::Key_F12 )
+                toWrite += QString("%1[24;%2~").arg(ch_ESC).arg(modChar).toLatin1();
+
+        }
+
+        if( key==Qt::Key_Enter || key==Qt::Key_Return ) {
+            if(iNewLineMode)
+                toWrite += "\r\n";
+            else
+                toWrite += "\r";
+        }
+        if( key==Qt::Key_Backspace )
+            toWrite += "\x7F";
+        if( key==Qt::Key_Tab )
+            toWrite = "\t";
+
+        if( key==Qt::Key_Escape ) {
+            toWrite += QString(1,ch_ESC);
+        }
+
+        if (!toWrite.isEmpty()) {
+            if(iPtyIFace)
+                iPtyIFace->writeTerm(toWrite);
+            return;
+        }
+    }
+
+    QChar c(key);
 
     if (c.isLetter()) {
         c = ((modifiers & Qt::ShiftModifier) != 0) ? c.toUpper() : c.toLower();
     }
 
-    QString toWrite;
+    if((modifiers & Qt::AltModifier) != 0) {
+        toWrite.append(ch_ESC);
+    }
 
-    if ((key <= 0xFF) || (!text.isEmpty())) {
-        if((modifiers & Qt::AltModifier) != 0) {
-            toWrite.append(ch_ESC);
-        }
+    if ((modifiers & Qt::ControlModifier) != 0) {
+        char asciiVal = c.toLatin1();
 
-        if ((modifiers & Qt::ControlModifier) != 0) {
-            char asciiVal = c.toLatin1();
-
-            if (asciiVal >= 0x41 && asciiVal <= 0x5f) {
-                // Turn uppercase characters into their control code equivalent
-                toWrite.append(asciiVal - 0x40);
-            } else if (asciiVal >= 0x61 && asciiVal <= 0x7f) {
-                // Turn lowercase characters into their control code equivalent
-                toWrite.append(asciiVal - 0x60);
-            } else {
-                qWarning() << "Ctrl+" << c << " does not translate into a control code";
-            }
+        if (asciiVal >= 0x41 && asciiVal <= 0x5f) {
+            // Turn uppercase characters into their control code equivalent
+            toWrite.append(asciiVal - 0x40);
+        } else if (asciiVal >= 0x61 && asciiVal <= 0x7f) {
+            // Turn lowercase characters into their control code equivalent
+            toWrite.append(asciiVal - 0x60);
         } else {
-            if (text.isEmpty()) {
-                toWrite.append(c);
-            } else {
-                toWrite.append(text);
-            }
+            qWarning() << "Ctrl+" << c << " does not translate into a control code";
         }
-
-        if (iPtyIFace) {
-            iPtyIFace->writeTerm(toWrite);
-        }
-        return;
-    }
-
-    int modcode = (modifiers & Qt::ShiftModifier ? 1 : 0) | 
-                  (modifiers & Qt::AltModifier ? 2 : 0) |
-                  (modifiers & Qt::ControlModifier ? 4 : 0);
-
-    if (modcode == 0) {
-        char cursorModif='[';
-        if(iAppCursorKeys)
-            cursorModif = 'O';
-
-        if( key==Qt::Key_Up )
-            toWrite += QString("%1%2A").arg(ch_ESC).arg(cursorModif).toLatin1();
-        if( key==Qt::Key_Down )
-            toWrite += QString("%1%2B").arg(ch_ESC).arg(cursorModif).toLatin1();
-        if( key==Qt::Key_Right )
-            toWrite += QString("%1%2C").arg(ch_ESC).arg(cursorModif).toLatin1();
-        if( key==Qt::Key_Left )
-            toWrite += QString("%1%2D").arg(ch_ESC).arg(cursorModif).toLatin1();
-        if( key==Qt::Key_PageUp )
-            toWrite += QString("%1[5~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_PageDown )
-            toWrite += QString("%1[6~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_Home )
-            toWrite += QString("%1OH").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_End )
-            toWrite += QString("%1OF").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_Insert )
-            toWrite += QString("%1[2~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_Delete )
-            toWrite += QString("%1[3~").arg(ch_ESC).toLatin1();
-
-        if( key==Qt::Key_F1 )
-            toWrite += QString("%1OP").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F2 )
-            toWrite += QString("%1OQ").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F3 )
-            toWrite += QString("%1OR").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F4 )
-            toWrite += QString("%1OS").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F5 )
-            toWrite += QString("%1[15~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F6 )
-            toWrite += QString("%1[17~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F7 )
-            toWrite += QString("%1[18~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F8 )
-            toWrite += QString("%1[19~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F9 )
-            toWrite += QString("%1[20~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F10 )
-            toWrite += QString("%1[21~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F11 )
-            toWrite += QString("%1[23~").arg(ch_ESC).toLatin1();
-        if( key==Qt::Key_F12 )
-            toWrite += QString("%1[24~").arg(ch_ESC).toLatin1();
-
     } else {
-        char modChar = '1' + modcode;
-
-        if( key==Qt::Key_Up )
-            toWrite += QString("%1[1;%2A").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Down )
-            toWrite += QString("%1[1;%2B").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Right )
-            toWrite += QString("%1[1;%2C").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Left )
-            toWrite += QString("%1[1;%2D").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_PageUp )
-            toWrite += QString("%1[5;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_PageDown )
-            toWrite += QString("%1[6;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Home )
-            toWrite += QString("%1[1;%2H").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_End )
-            toWrite += QString("%1[1;%2F").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Insert )
-            toWrite += QString("%1[2;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_Delete )
-            toWrite += QString("%1[3;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-
-        if( key==Qt::Key_F1 )
-            toWrite += QString("%1[1;%2P").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F2 )
-            toWrite += QString("%1[1;%2Q").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F3 )
-            toWrite += QString("%1[1;%2R").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F4 )
-            toWrite += QString("%1[1;%2S").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F5 )
-            toWrite += QString("%1[15;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F6 )
-            toWrite += QString("%1[17;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F7 )
-            toWrite += QString("%1[18;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F8 )
-            toWrite += QString("%1[19;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F9 )
-            toWrite += QString("%1[20;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F10 )
-            toWrite += QString("%1[21;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F11 )
-            toWrite += QString("%1[23;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-        if( key==Qt::Key_F12 )
-            toWrite += QString("%1[24;%2~").arg(ch_ESC).arg(modChar).toLatin1();
-
+        if (text.isEmpty()) {
+            toWrite.append(c);
+        } else {
+            toWrite.append(text);
+        }
     }
 
-    if( key==Qt::Key_Enter || key==Qt::Key_Return ) {
-        if(iNewLineMode)
-            toWrite += "\r\n";
-        else
-            toWrite += "\r";
-    }
-    if( key==Qt::Key_Backspace )
-        toWrite += "\x7F";
-    if( key==Qt::Key_Tab )
-        toWrite = "\t";
-
-    if( key==Qt::Key_Escape ) {
-        toWrite += QString(1,ch_ESC);
-    }
-
-    if(iPtyIFace)
+    if (iPtyIFace) {
         iPtyIFace->writeTerm(toWrite);
+    }
+    return;
 }
 
 void Terminal::insertInBuffer(const QString& chars)
