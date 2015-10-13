@@ -286,14 +286,11 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
     }
 
     if ((modifiers & Qt::ControlModifier) != 0) {
-        char asciiVal = c.toLatin1();
+        char asciiVal = c.toUpper().toLatin1();
 
         if (asciiVal >= 0x41 && asciiVal <= 0x5f) {
             // Turn uppercase characters into their control code equivalent
             toWrite.append(asciiVal - 0x40);
-        } else if (asciiVal >= 0x61 && asciiVal <= 0x7f) {
-            // Turn lowercase characters into their control code equivalent
-            toWrite.append(asciiVal - 0x60);
         } else {
             qWarning() << "Ctrl+" << c << " does not translate into a control code";
         }
