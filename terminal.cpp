@@ -216,7 +216,7 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
             if( key==Qt::Key_F12 ) fmt = "%1[24~";
             
             if (!fmt.isEmpty())
-                toWrite += fmt.arg(ch_ESC).toLatin1();
+                toWrite += fmt.arg(ch_ESC);
 
         } else {
             QString fmt;
@@ -247,7 +247,7 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
             if( key==Qt::Key_F12 ) fmt = "%1[24;%2~";
 
             if (!fmt.isEmpty())
-                toWrite += fmt.arg(ch_ESC).arg(modChar).toLatin1();
+                toWrite += fmt.arg(ch_ESC).arg(modChar);
 
         }
 
@@ -277,9 +277,9 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
             if ( key == Qt::Key_Backtab ) modifiers |= Qt::ShiftModifier;
             if (modifiers & Qt::ControlModifier) {
                 char modChar = '5' + (modifiers & Qt::ShiftModifier ? 1 : 0);
-                toWrite += QString("%1[1;%2I").arg(ch_ESC).arg(modChar).toLatin1();
+                toWrite += QString("%1[1;%2I").arg(ch_ESC).arg(modChar);
             } else if (modifiers & Qt::ShiftModifier) {
-                toWrite += QString("%1[Z").arg(ch_ESC).toLatin1();
+                toWrite += QString("%1[Z").arg(ch_ESC);
             } else {
                 toWrite += "\t";
             }
