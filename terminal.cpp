@@ -180,7 +180,7 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
 
     resetBackBufferScrollPos();
 
-    if (key > 0xFF) {
+    if (key > 0xFFFF) {
         int modcode = (modifiers & Qt::ShiftModifier ? 1 : 0) | 
                       (modifiers & Qt::AltModifier ? 2 : 0) |
                       (modifiers & Qt::ControlModifier ? 4 : 0);
@@ -269,8 +269,10 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
         if (!toWrite.isEmpty()) {
             if(iPtyIFace)
                 iPtyIFace->writeTerm(toWrite);
-            return;
+        } else {
+            qDebug() << "unknown special key: " << key;
         }
+        return;
     }
 
     QChar c(key);
