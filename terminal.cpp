@@ -198,7 +198,7 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
             if( key==Qt::Key_PageUp ) fmt = "%1[5~";
             if( key==Qt::Key_PageDown ) fmt = "%1[6~";
             if( key==Qt::Key_Home ) fmt = "%1OH";
-            if( key==Qt::Key_End ) fmt = "1OF";
+            if( key==Qt::Key_End ) fmt = "%1OF";
             if( key==Qt::Key_Insert ) fmt = "%1[2~";
             if( key==Qt::Key_Delete ) fmt = "%1[3~";
 
