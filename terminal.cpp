@@ -252,18 +252,44 @@ void Terminal::keyPress(int key, int modifiers, const QString& text)
         }
 
         if( key==Qt::Key_Enter || key==Qt::Key_Return ) {
-            if(iNewLineMode)
+            if ( (modifiers & (Qt::ShiftModifier | Qt::ControlModifier)) ==
+                (Qt::ShiftModifier | Qt::ControlModifier) )
+                toWrite += QChar(0x9E);
+            else if (modifiers & Qt::ControlModifier)
+                toWrite += QChar(0x1E); // ^^
+            else if (modifiers & Qt::ShiftModifier)
+                toWrite += "\n";
+            else if(iNewLineMode)
                 toWrite += "\r\n";
             else
                 toWrite += "\r";
         }
-        if( key==Qt::Key_Backspace )
-            toWrite += "\x7F";
-        if( key==Qt::Key_Tab )
-            toWrite = "\t";
+        if( key==Qt::Key_Backspace ) {
+            if ( (modifiers & (Qt::ShiftModifier | Qt::ControlModifier)) ==
+                (Qt::ShiftModifier | Qt::ControlModifier) )
+                toWrite += QChar(0x9F);
+            else if (modifiers & Qt::ControlModifier)
+                toWrite += QChar(0x1F); // ^_
+            else
+                toWrite += "\x7F";
+        }
+        if( key==Qt::Key_Tab || key==Qt::Key_Backtab ) {
+            if ( key == Qt::Key_Backtab ) modifiers |= Qt::ShiftModifier;
+            if (modifiers & Qt::ControlModifier) {
+                char modChar = '5' + (modifiers & Qt::ShiftModifier ? 1 : 0);
+                toWrite += QString("%1[1;%2I").arg(ch_ESC).arg(modChar).toLatin1();
+            } else if (modifiers & Qt::ShiftModifier) {
+                toWrite += QString("%1[Z").arg(ch_ESC).toLatin1();
+            } else {
+                toWrite += "\t";
+            }
+        }
 
         if( key==Qt::Key_Escape ) {
-            toWrite += QString(1,ch_ESC);
+            if (modifiers & Qt::ShiftModifier)
+                toWrite += QChar(0x9B);
+            else
+                toWrite += QString(1,ch_ESC);
         }
 
         if (!toWrite.isEmpty()) {
